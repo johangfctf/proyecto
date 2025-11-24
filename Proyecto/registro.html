@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+        }
+
+        .left {
+            width: 50%;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .right {
+            width: 50%;
+            background: linear-gradient(135deg, #005bea, #00c6fb);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #999;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            background: #005bea;
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #0045b5;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- FORMULARIO (IZQUIERDA) -->
+        <div class="left">
+            <h2>Crear cuenta nueva</h2>
+
+            <form action="registro.php" method="POST">
+
+                <div class="input-group">
+                    <input type="text" name="nombre" placeholder="Nombre completo" required>
+                </div>
+
+                <div class="input-group">
+                    <input type="email" name="correo" placeholder="Correo electrónico" required>
+                </div>
+
+                <div class="input-group">
+                    <input type="text" name="telefono" placeholder="Teléfono" required>
+                </div>
+
+                <div class="input-group">
+                    <input type="password" name="password" placeholder="Contraseña" required>
+                </div>
+
+                <div class="input-group">
+                    <input type="password" name="confirmar" placeholder="Confirmar contraseña" required>
+                </div>
+
+                <button type="submit">Registrarse</button>
+            </form>
+
+        </div>
+
+        <!-- FONDO (DERECHA) -->
+        <div class="right">
+            Bienvenido
+        </div>
+
+    </div>
+
+</body>
+</html>
