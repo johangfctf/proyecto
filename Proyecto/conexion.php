@@ -11,6 +11,7 @@ $database = "farmacia_db";    // Nombre de tu base de datos
 $conn = new mysqli($servername, $username, $password, $database);
 
 // Verificar conexión
+//hola
 if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
