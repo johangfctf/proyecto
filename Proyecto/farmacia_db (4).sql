@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-11-2025 a las 16:30:01
+-- Tiempo de generación: 25-11-2025 a las 16:29:09
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -117,6 +117,18 @@ CREATE TABLE `doctor` (
   `horario_fin` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `doctor`
+--
+
+INSERT INTO `doctor` (`id`, `nombre`, `especialidad`, `horario_inicio`, `horario_fin`) VALUES
+(1, 'Dr. Carlos Hernández', 'Medicina General', '09:00:00', '14:00:00'),
+(2, 'Dra. Sofía Ramírez', 'Pediatría', '10:00:00', '16:00:00'),
+(3, 'Dr. Miguel Torres', 'Medicina Interna', '08:00:00', '13:00:00'),
+(4, 'Dra. Laura Méndez', 'Dermatología', '12:00:00', '18:00:00'),
+(5, 'Dr. Andrés Guzmán', 'Ginecología', '09:00:00', '15:00:00'),
+(6, 'Dra. Valeria Rojas', 'Nutrición', '11:00:00', '17:00:00');
+
 -- --------------------------------------------------------
 
 --
@@ -129,6 +141,38 @@ CREATE TABLE `doctor_citas` (
   `fecha_actualizacion` datetime DEFAULT NULL,
   `estado` enum('aceptada','rechazada','atendida') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `doctor_horario`
+--
+
+CREATE TABLE `doctor_horario` (
+  `id` int(11) NOT NULL,
+  `doctor_id` int(11) NOT NULL,
+  `dia_semana` enum('Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo') DEFAULT NULL,
+  `hora_inicio` time NOT NULL,
+  `hora_fin` time NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `doctor_horario`
+--
+
+INSERT INTO `doctor_horario` (`id`, `doctor_id`, `dia_semana`, `hora_inicio`, `hora_fin`) VALUES
+(1, 1, 'Lunes', '09:00:00', '14:00:00'),
+(2, 2, 'Lunes', '10:00:00', '16:00:00'),
+(3, 3, 'Martes', '08:00:00', '13:00:00'),
+(4, 4, 'Martes', '12:00:00', '18:00:00'),
+(5, 5, 'Miércoles', '09:00:00', '15:00:00'),
+(6, 6, 'Miércoles', '11:00:00', '17:00:00'),
+(7, 1, 'Jueves', '09:00:00', '14:00:00'),
+(8, 3, 'Jueves', '08:00:00', '13:00:00'),
+(9, 2, 'Viernes', '10:00:00', '16:00:00'),
+(10, 4, 'Viernes', '12:00:00', '18:00:00'),
+(11, 5, 'Sábado', '09:00:00', '14:00:00'),
+(12, 6, 'Sábado', '11:00:00', '17:00:00');
 
 -- --------------------------------------------------------
 
@@ -303,6 +347,13 @@ ALTER TABLE `doctor_citas`
   ADD KEY `cita_id` (`cita_id`);
 
 --
+-- Indices de la tabla `doctor_horario`
+--
+ALTER TABLE `doctor_horario`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `doctor_id` (`doctor_id`);
+
+--
 -- Indices de la tabla `historial_citas`
 --
 ALTER TABLE `historial_citas`
@@ -361,13 +412,19 @@ ALTER TABLE `detalle_compras`
 -- AUTO_INCREMENT de la tabla `doctor`
 --
 ALTER TABLE `doctor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `doctor_citas`
 --
 ALTER TABLE `doctor_citas`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `doctor_horario`
+--
+ALTER TABLE `doctor_horario`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `historial_citas`
@@ -422,6 +479,12 @@ ALTER TABLE `detalle_compras`
 --
 ALTER TABLE `doctor_citas`
   ADD CONSTRAINT `doctor_citas_ibfk_1` FOREIGN KEY (`cita_id`) REFERENCES `citas` (`id`);
+
+--
+-- Filtros para la tabla `doctor_horario`
+--
+ALTER TABLE `doctor_horario`
+  ADD CONSTRAINT `doctor_horario_ibfk_1` FOREIGN KEY (`doctor_id`) REFERENCES `doctor` (`id`);
 
 --
 -- Filtros para la tabla `historial_citas`

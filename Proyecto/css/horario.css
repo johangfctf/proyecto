@@ -1,0 +1,59 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f4eefc;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #5b3caf;
+    margin-bottom: 25px;
+}
+
+.selector-dia {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.selector-dia select {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #b19fff;
+    background: #faf8ff;
+    color: #5b3caf;
+}
+
+.doctor-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    border-left: 6px solid #9c6bff;
+}
+
+.doctor-card h2 {
+    margin: 0;
+    color: #333;
+}
+
+.doctor-card p {
+    margin: 5px 0;
+    color: #555;
+    font-size: 15px;
+}
+
+.horario {
+    font-weight: bold;
+    color: #5b3caf;
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+.mensaje-vacio {
+    text-align: center;
+    color: #555;
+    font-size: 17px;
+}
