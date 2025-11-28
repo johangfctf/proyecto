@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Farmacia Web</title>
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -61,13 +62,13 @@
 
 <div class="categories">
     <?php
-    // Mostrar todas las categorías
-    $sql = "SELECT * FROM categorias";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-            echo '<div class="category" onclick="mostrarProductos('.$row['id'].')">'.$row['nombre'].'</div>';
-        }
+    // Mostrar todas las categorías usando SQLite
+    $result = $db->query("SELECT * FROM categorias");
+
+    while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+        echo '<div class="category" onclick="mostrarProductos('.$row['id'].')">'
+            . htmlspecialchars($row['nombre']) .
+            '</div>';
     }
     ?>
 </div>

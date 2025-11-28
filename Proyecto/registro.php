@@ -1,19 +1,19 @@
 <?php
-// CONEXIÓN A LA BASE DE DATOS
-$conexion = new mysqli("localhost", "root", "", "farmacia_db");
+// ------------------- CONEXIÓN A SQLITE -------------------
+$db = new SQLite3('farmacia.db');
 
-if ($conexion->connect_error) {
-    die("Error de conexión: " . $conexion->connect_error);
+if (!$db) {
+    die("Error al conectar con la base de datos SQLite");
 }
 
-// OBTENER DATOS DEL FORMULARIO
+// ------------------- OBTENER DATOS DEL FORMULARIO -------------------
 $nombre = $_POST['nombre'];
 $correo = $_POST['correo'];
 $telefono = $_POST['telefono'];
 $password = $_POST['password'];
 $confirmar = $_POST['confirmar'];
 
-// VALIDAR QUE LAS CONTRASEÑAS COINCIDAN
+// ------------------- VALIDAR CONTRASEÑAS -------------------
 if ($password !== $confirmar) {
     echo "
         <script>
@@ -24,11 +24,12 @@ if ($password !== $confirmar) {
     exit();
 }
 
-// VERIFICAR QUE EL CORREO NO ESTÉ REGISTRADO
-$sqlCorreo = "SELECT * FROM usuarios WHERE correo = '$correo'";
-$resultadoCorreo = $conexion->query($sqlCorreo);
+// ------------------- VERIFICAR CORREO REPETIDO -------------------
+$sqlCorreo = $db->prepare("SELECT * FROM usuarios WHERE correo = :correo");
+$sqlCorreo->bindValue(':correo', $correo, SQLITE3_TEXT);
+$resultadoCorreo = $sqlCorreo->execute();
 
-if ($resultadoCorreo->num_rows > 0) {
+if ($resultadoCorreo->fetchArray(SQLITE3_ASSOC)) {
     echo "
         <script>
             alert('Este correo ya está registrado');
@@ -38,11 +39,18 @@ if ($resultadoCorreo->num_rows > 0) {
     exit();
 }
 
-// INSERTAR EL USUARIO NUEVO
-$sqlInsert = "INSERT INTO usuarios (nombre, correo, telefono, password) 
-              VALUES ('$nombre', '$correo', '$telefono', '$password')";
+// ------------------- INSERTAR USUARIO NUEVO -------------------
+$sqlInsert = $db->prepare("
+    INSERT INTO usuarios (nombre, correo, telefono, password)
+    VALUES (:nombre, :correo, :telefono, :password)
+");
 
-if ($conexion->query($sqlInsert) === TRUE) {
+$sqlInsert->bindValue(':nombre', $nombre, SQLITE3_TEXT);
+$sqlInsert->bindValue(':correo', $correo, SQLITE3_TEXT);
+$sqlInsert->bindValue(':telefono', $telefono, SQLITE3_TEXT);
+$sqlInsert->bindValue(':password', $password, SQLITE3_TEXT);
+
+if ($sqlInsert->execute()) {
     echo "
         <script>
             alert('Registro exitoso. Ahora puedes iniciar sesión');
@@ -58,5 +66,5 @@ if ($conexion->query($sqlInsert) === TRUE) {
     ";
 }
 
-$conexion->close();
+$db->close();
 ?>
